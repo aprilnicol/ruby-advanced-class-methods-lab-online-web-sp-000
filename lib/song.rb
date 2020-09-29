@@ -7,41 +7,41 @@ class Song
 def save
     self.class.all << self
   end
-def self.create 
-  song = self.new 
-  song.save 
-  song 
+def self.create
+  song = self.new
+  song.save
+  song
 end
 def self.new_by_name(name)
   song = self.new
-  song.name = name 
-  song 
-end 
+  song.name = name
+  song
+end
 def self.create_by_name(name)
-  song = self.create 
-  song.name = name 
-  song 
-end 
+  song = self.create
+  song.name = name
+  song
+end
 def self.find_by_name(name)
   @@all.each do |song|
-    if song.name == name 
-      return song 
-    end 
-  end 
-end 
+    if song.name == name
+      return song
+    end
+  end
+end
 def self.find_or_create_by_name(name)
   self.find_by_name(name) || self.create_by_name(name)
-end 
+end
 def self.alphabetical
   @@all.sort_by{|song| song.name}
-end 
+end
 def self.new_from_filename(filename)
-  row = filename 
+  row = filename
   data = row.split (" - ")
   artist_name = data[0]
   songs_name = data[1].gsub(" .mp3", "")
-  song = self.new 
-  song.name = songs_name 
+  song = self.new
+  song.name = songs_name
   song.artist_name = artist_name
-  song 
+  song
 end 
