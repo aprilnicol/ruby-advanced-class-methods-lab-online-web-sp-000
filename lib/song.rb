@@ -7,47 +7,44 @@ class Song
 def save
     self.class.all << self
   end
-def self.create
-  song = self.new
+def self.create 
+  song = Song.new
   song.save
-  song
-end
+  song 
+end 
 def self.new_by_name(name)
   song = self.new
-  song.name = name
-  song
-end
+  song.name = name 
+  song 
+end 
 def self.create_by_name(name)
   song = self.create
-  song.name = name
-  song
-end
+  song.name = name 
+  song 
+end 
 def self.find_by_name(name)
-  @@all.each do |song|
-    if song.name == name
-      return song
-    end
-  end
-end
+  self.all.find {|obj|obj.name == name}
+end 
 def self.find_or_create_by_name(name)
-  self.find_by_name(name) || self.create_by_name(name)
-end
+  self.find_by_name(name) ||
+  self.create_by_name(name)
+end 
 def self.alphabetical
-  @@all.sort_by{|song| song.name}
-end
+  self.all.sort_by {|song| song.name}
+end 
 def self.new_from_filename(filename)
-  row = filename
-  data = row.split (" - ")
-  artist_name = data[0]
-  songs_name = data[1].gsub(" .mp3", "")
-  song = self.new
-  song.name = songs_name
-  song.artist_name = artist_name
-  song
-end
+  songFile = filename.split(/[-.]+/)
+  song_new= self.new_by_name(songFile[1].strip)
+  song_new.artist_name = songFile[0].strip
+  song_new
+end 
 def self.create_from_filename(filename)
-  song = self.new_from_filename(filename)
-  song.save
-  song
-end
+  songFile = filename.split(/[-.]+/)
+  song_new = self.create_by_name(songFile[1].strip)
+  song_new.artist_name = songFile[0].strip 
+  song_new
+end 
+def self.destroy_all
+  @@all = []
+end 
 end 
